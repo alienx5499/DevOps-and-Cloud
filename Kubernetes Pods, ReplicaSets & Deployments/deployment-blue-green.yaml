@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-blue
+  labels:
+    app: myapp
+    slot: blue
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+      slot: blue
+  template:
+    metadata:
+      labels:
+        app: myapp
+        slot: blue
+    spec:
+      containers:
+        - name: app
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-green
+  labels:
+    app: myapp
+    slot: green
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+      slot: green
+  template:
+    metadata:
+      labels:
+        app: myapp
+        slot: green
+    spec:
+      containers:
+        - name: app
+          image: nginx:alpine
+          ports:
+            - containerPort: 80

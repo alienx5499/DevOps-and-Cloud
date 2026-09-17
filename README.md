@@ -15,6 +15,10 @@ Comprehensive repository for Scaler School of Technology (SST) Term 9 DevOps and
 | **05. Docker Fundamentals** | 6 Hello World web apps (`nodejs-app`, `python-app`, `java-app`, `Apache-app`, `React-app`, `nginx-app`) | [Docker Fundamentals/README.md](./Docker%20Fundamentals/README.md) |
 | **06. Docker Images** | Multi-stage Docker builds, image size optimization, 3-stack container deployments | [Docker Images/README.md](./Docker%20Images/README.md) |
 | **07. Docker Networking** | Multi-network container isolation, host network mode, bind mounts hot reloading, overlay VXLAN | [Docker Networking/README.md](./Docker%20Networking/README.md) |
+| **08. Kubernetes Fundamentals** | Cluster architecture, Control Plane & Worker components, Minikube lifecycle & status inspection | [Kubernetes Fundamentals/README.md](./Kubernetes%20Fundamentals/README.md) |
+| **09. Kubernetes Pods, ReplicaSets & Deployments** | Pod manifests, self-healing ReplicaSets, rolling update Deployments, rollbacks | [Kubernetes Pods, ReplicaSets & Deployments/README.md](./Kubernetes%20Pods%2C%20ReplicaSets%20%26%20Deployments/README.md) |
+| **10. Kubernetes Networking & Services** | ClusterIP, NodePort, LoadBalancer, CoreDNS discovery, kube-proxy routing | [Kubernetes Networking & Services/README.md](./Kubernetes%20Networking%20%26%20Services/README.md) |
+| **11. Kubernetes Ingress, ConfigMaps & Secrets** | Ingress L7 routing, ConfigMap decoupled configurations, Base64 Secrets storage | [Kubernetes Ingress, ConfigMaps & Secrets/README.md](./Kubernetes%20Ingress%2C%20ConfigMaps%20%26%20Secrets/README.md) |
 
 ---
 
@@ -46,7 +50,15 @@ Comprehensive repository for Scaler School of Technology (SST) Term 9 DevOps and
 ├── Docker Images/
 │   ├── multi-stage-app/
 │   └── README.md
-└── Docker Networking/
-    ├── html-bind/
+├── Docker Networking/
+│   ├── html-bind/
+│   └── README.md
+├── Kubernetes Fundamentals/
+│   └── README.md
+├── Kubernetes Pods, ReplicaSets & Deployments/
+│   └── README.md
+├── Kubernetes Networking & Services/
+│   └── README.md
+└── Kubernetes Ingress, ConfigMaps & Secrets/
     └── README.md
 ```

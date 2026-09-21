@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hostpath-demo-pod
+  labels:
+    app: storage-demo
+    storage-type: hostpath
+spec:
+  containers:
+    - name: hostpath-agent
+      image: busybox:1.36
+      command: ["/bin/sh", "-c"]
+      args:
+        - >
+          echo "HostPath agent active. Writing system telemetry...";
+          echo "Pod started on node at $(date)" >> /node-logs/k8s-agent-startup.log;
+          tail -f /dev/null;
+      volumeMounts:
+        - name: node-log-volume
+          mountPath: /node-logs
+
+  volumes:
+    - name: node-log-volume
+      hostPath:
+        path: /var/log
+        type: DirectoryOrCreate

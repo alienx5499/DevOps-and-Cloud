@@ -1,0 +1,25 @@
+replicaCount: 3
+
+image:
+  repository: nginx
+  tag: "1.27-alpine"
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 80
+  nodePort: 30090
+
+app:
+  name: notes-app
+  environment: production
+  logLevel: info
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi

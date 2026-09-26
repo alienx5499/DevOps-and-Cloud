@@ -1,0 +1,97 @@
+name: Calculator CI-CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test Application (pytest)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run unit test suite
+        run: |
+          pytest -v tests/test_calculator.py
+
+  build:
+    name: Build Application Package
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Execute build script
+        run: |
+          chmod +x build.sh
+          ./build.sh
+
+      - name: Verify build artifact manifest
+        run: |
+          cat build/build-info.txt
+          ls -lh build/
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: calculator-build-artifact
+          path: build/
+
+  security-check:
+    name: Repository Security Scan
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Audit repository for exposed secrets
+        run: |
+          echo "Scanning working tree for uncommitted private keys or environment files..."
+          if find . -type f \( -name ".env" -o -name "*.pem" -o -name "*.key" \) | grep -q .; then
+            echo "Security Alert: Exposed sensitive file detected!"
+            exit 1
+          else
+            echo "Clean: No sensitive files located."
+          fi
+
+  docker-build:
+    name: Docker Container Build
+    needs:
+      - build
+      - security-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: |
+          docker build -t session16-calculator:${{ github.sha }} .
+          docker image ls | grep session16-calculator

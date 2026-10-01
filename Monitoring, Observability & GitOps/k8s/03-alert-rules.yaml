@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-alert-rules
+  namespace: monitoring
+data:
+  alert-rules.yaml: |
+    groups:
+      - name: application-health-alerts
+        rules:
+          - alert: ServiceDown
+            expr: up{job="app-service"} == 0
+            for: 30s
+            labels:
+              severity: critical
+            annotations:
+              summary: "Target application service is unreachable"
+              description: "The application pod has been down for more than 30 seconds."
+
+          - alert: HighCpuUtilization
+            expr: system_cpu_usage_percent > 85
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High CPU utilization detected"
+              description: "Service CPU usage has exceeded 85% for over 1 minute."
+
+          - alert: HighHttp5xxRate
+            expr: rate(http_requests_total{status=~"5.."}[2m]) > 0.05
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Elevated HTTP 5xx error rate"
+              description: "More than 5% of incoming requests are failing with internal server errors."

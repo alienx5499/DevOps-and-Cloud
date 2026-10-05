@@ -1,0 +1,35 @@
+# macOS
+.DS_Store
+._*
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfvars
+!*.tfvars.example
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# Rust
+target/
+**/*.rs.bk
+Cargo.lock
+
+# Helm
+*.tgz
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Commit Generator
+commit.txt
